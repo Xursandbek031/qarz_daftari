@@ -110,13 +110,30 @@ export default function SuperAdminPage() {
     fetchShops();
   };
 
+  // const handleDeleteShop = async (shopId: string) => {
+  //   const { error } = await supabase.from("shops").delete().eq("id", shopId);
+  //   if (error) {
+  //     toast({ title: "Xato", description: error.message, variant: "destructive" });
+  //   } else {
+  //     toast({ title: "O'chirildi", description: "Do'kon o'chirildi" });
+  //     fetchShops();
+  //   }
+  // };
+
   const handleDeleteShop = async (shopId: string) => {
-    const { error } = await supabase.from("shops").delete().eq("id", shopId);
-    if (error) {
-      toast({ title: "Xato", description: error.message, variant: "destructive" });
+    const { data, error } = await supabase.functions.invoke("delete-shop", {
+      body: { shopId },
+    })
+
+    if (error || data?.error) {
+      toast({
+        title: "Xato",
+        description: error?.message || data?.error,
+        variant: "destructive",
+      })
     } else {
-      toast({ title: "O'chirildi", description: "Do'kon o'chirildi" });
-      fetchShops();
+      toast({ title: "O'chirildi", description: "Do'kon to‘liq o‘chirildi" })
+      fetchShops()
     }
   };
 
