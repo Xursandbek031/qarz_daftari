@@ -73,6 +73,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               </button>
             </div>
             <nav className="flex-1 px-3 space-y-1">
+              
               {navItems.map((item) => (
                 <Link
                   key={item.to}
@@ -90,6 +91,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               ))}
             </nav>
+            
             <div className="p-3 border-t border-sidebar-border">
               <button
                 onClick={signOut}
